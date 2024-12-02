@@ -13,10 +13,10 @@ client.once("ready", () => {
   client.user.setPresence({
     activities: [{
       name: "/look", // The custom status message
-      type: "CUSTOM_STATUS", // Set as CUSTOM_STATUS (no game type)
+      type: "WATCHING", // This can be any activity type like "PLAYING", "WATCHING", etc. "WATCHING" is a common choice for status-like displays.
     }],
     status: "dnd", // Set the bot's status to Do Not Disturb
-  });
+  }).catch(console.error);
 });
 
 client.on("message", async (message) => {
