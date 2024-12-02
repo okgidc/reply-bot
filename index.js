@@ -1,9 +1,10 @@
 require("dotenv").config();
 
 const Discord = require("discord.js");
-const keep_alive = require('./keep_alive.js')
+const keep_alive = require('./keep_alive.js');
 const client = new Discord.Client();
 
+// Retrieve the bot token from the environment variable set in Replit
 const token = process.env.BOT_TOKEN;
 
 client.once("ready", () => {
@@ -38,7 +39,7 @@ client.on("message", async (message) => {
     message.channel.id === "757708878203977888" &&
     message.content == "oof among_us"
   ) {
-    var targetMember = message.author;  // Corrected
+    var targetMember = message.get(message.author);
     message.reply("What is the game code?...");
 
     message.channel
@@ -48,7 +49,7 @@ client.on("message", async (message) => {
       })
       .then((collected) => {
         var gameCode = collected.first().content;
-        if (collected.first().content.length <= 6) {  // Corrected length check
+        if (collected.first().content.length() <= 6) {
           const embedMsg = new Discord.MessageEmbed()
             .setTitle("Among Us Game")
             .setDescription(
@@ -70,4 +71,5 @@ client.on("message", async (message) => {
   }
 });
 
+// Log in with the token
 client.login(token);
