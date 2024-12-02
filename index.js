@@ -1,25 +1,20 @@
 require("dotenv").config();
-const { Client, ActivityType } = require("discord.js");
+
+const { Client, GatewayIntentBits } = require('discord.js');
 const keep_alive = require('./keep_alive.js');
 
-const client = new Client();
-
-const token = process.env.BOT_TOKEN;
-
-client.once("ready", () => {
-  console.log("Bot is online!");
-
-  // Set the custom status to "Watching /look" and DND mode
-  client.user.setPresence({
-    activities: [
-      {
-        name: "/look",
-        type: ActivityType.Watching,
-      }
-    ],
-    status: 'dnd',
-  });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
 });
 
-// Login to Discord
-client.login(token);
+client.once("ready", () => {
+  console.log("Ready!");
+  client.user.setStatus("dnd"); // Set status to Do Not Disturb
+  client.user.setActivity("/look", { type: "PLAYING" }); // Set activity to "/look"
+});
+
+client.login(process.env.BOT_TOKEN);
