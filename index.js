@@ -1,11 +1,12 @@
 require("dotenv").config();
-
 const Discord = require("discord.js");
-const keep_alive = require('./keep_alive.js');
+const keep_alive = require('./keep_alive.js');  // Import keep_alive to ensure it stays online
 const client = new Discord.Client();
 
-// Retrieve the bot token from the environment variable set in Replit
 const token = process.env.BOT_TOKEN;
+
+// Call keep_alive to start the HTTP server that will respond to UptimeRobot pings
+keep_alive();
 
 client.once("ready", () => {
   console.log("Ready!");
@@ -54,7 +55,7 @@ client.on("message", async (message) => {
             .setTitle("Among Us Game")
             .setDescription(
               targetMember +
-                " hosted an Among Us Game\nJoin the game: `" +
+                "hosted an Among Us Game\nJoin the game: `" +
                 gameCode +
                 "`"
             )
@@ -71,5 +72,4 @@ client.on("message", async (message) => {
   }
 });
 
-// Log in with the token
 client.login(token);
