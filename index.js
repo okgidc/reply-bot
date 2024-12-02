@@ -1,22 +1,24 @@
 require("dotenv").config();
-
 const Discord = require("discord.js");
 const keep_alive = require('./keep_alive.js');
 const client = new Discord.Client();
+const { ActivityType } = require("discord.js");
 
 const token = process.env.BOT_TOKEN;
 
 client.once("ready", () => {
   console.log("Ready!");
-
-  // Set the bot's status to Do Not Disturb (DND) and display "/look" as a custom status
+  
+  // Set the custom status with the type 'WATCHING' and the text "/look"
   client.user.setPresence({
-    activities: [{
-      name: "/look", // The custom status message
-      type: "WATCHING", // This can be any activity type like "PLAYING", "WATCHING", etc. "WATCHING" is a common choice for status-like displays.
-    }],
-    status: "dnd", // Set the bot's status to Do Not Disturb
-  }).catch(console.error);
+    activities: [
+      {
+        name: "/look",  // Custom status text
+        type: ActivityType.Watching, // Set status type to Watching
+      }
+    ],
+    status: 'dnd', // Set the bot status to Do Not Disturb (DND)
+  });
 });
 
 client.on("message", async (message) => {
@@ -79,5 +81,4 @@ client.on("message", async (message) => {
   }
 });
 
-// Run the bot with your token (make sure to keep your token secure)
 client.login(token);
