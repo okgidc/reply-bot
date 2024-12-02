@@ -1,15 +1,22 @@
 require("dotenv").config();
+
 const Discord = require("discord.js");
-const keep_alive = require('./keep_alive.js');  // Import keep_alive to ensure it stays online
+const keep_alive = require('./keep_alive.js');
 const client = new Discord.Client();
 
 const token = process.env.BOT_TOKEN;
 
-// Call keep_alive to start the HTTP server that will respond to UptimeRobot pings
-keep_alive();
-
 client.once("ready", () => {
   console.log("Ready!");
+
+  // Set the bot's status to Do Not Disturb (DND) and display "/look" as a custom status
+  client.user.setPresence({
+    activities: [{
+      name: "/look", // The custom status message
+      type: "CUSTOM_STATUS", // Set as CUSTOM_STATUS (no game type)
+    }],
+    status: "dnd", // Set the bot's status to Do Not Disturb
+  });
 });
 
 client.on("message", async (message) => {
@@ -55,7 +62,7 @@ client.on("message", async (message) => {
             .setTitle("Among Us Game")
             .setDescription(
               targetMember +
-                "hosted an Among Us Game\nJoin the game: `" +
+                " hosted an Among Us Game\nJoin the game: `" +
                 gameCode +
                 "`"
             )
@@ -72,4 +79,5 @@ client.on("message", async (message) => {
   }
 });
 
+// Run the bot with your token (make sure to keep your token secure)
 client.login(token);
