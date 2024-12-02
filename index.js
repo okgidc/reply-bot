@@ -38,7 +38,7 @@ client.on("message", async (message) => {
     message.channel.id === "757708878203977888" &&
     message.content == "oof among_us"
   ) {
-    var targetMember = message.get(message.author);
+    var targetMember = message.author;  // Corrected
     message.reply("What is the game code?...");
 
     message.channel
@@ -48,12 +48,12 @@ client.on("message", async (message) => {
       })
       .then((collected) => {
         var gameCode = collected.first().content;
-        if (collected.first().content.length() <= 6) {
+        if (collected.first().content.length <= 6) {  // Corrected length check
           const embedMsg = new Discord.MessageEmbed()
             .setTitle("Among Us Game")
             .setDescription(
               targetMember +
-                "hosted an Among Us Game\nJoin the game: `" +
+                " hosted an Among Us Game\nJoin the game: `" +
                 gameCode +
                 "`"
             )
